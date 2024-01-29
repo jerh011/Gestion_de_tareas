@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gestion_de_tareas.View.VTareas"
+             NavigationPage.HasNavigationBar="False"
+             Padding="0,6,0,0"
+             BackgroundColor="#0000a3" >
+
+    <Grid RowDefinitions="60,*"
+          BackgroundColor="#0000a3" >
+
+        <Label Text="Tareas" HorizontalOptions="Center" VerticalOptions="Center" FontSize="28" FontAttributes="Bold" TextColor="White"/>
+
+        <CollectionView Background="#502bf0" x:Name="Listado" Grid.Row="1" ItemsSource="{Binding Lista}" Margin="0,0,0,66">
+
+            <CollectionView.ItemsLayout>
+
+                <GridItemsLayout Orientation="Vertical" Span="1" HorizontalItemSpacing="10" VerticalItemSpacing="10" />
+
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+
+                <DataTemplate>
+
+                    <Grid RowDefinitions="100, *" Margin="10,10,0,0">
+
+                        <Frame Grid.Row="1" WidthRequest="400" HeightRequest="120" HorizontalOptions="Center" CornerRadius="15" Margin="10,-105,10,0" 
+                               BackgroundColor="#5db6e7" HasShadow="False">
+                            <StackLayout>
+
+                                <Grid>
+
+
+                                    <StackLayout Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2">
+
+                                        <Label FontSize="18" TextColor="Black" Text="{Binding Descripcion}" Margin="1,0" />
+
+                                    </StackLayout>
+
+                                    <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
+                                        <Label Text="Inicio" FontSize="20" TextColor="Black" Margin="0,-0,10,-20"/>
+                                        <DatePicker Format="dd/MM/yyyy" Margin="0,0,0,0" Date="{Binding FechaInicio}"/>
+
+                                    </StackLayout>
+
+                                    <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="1" >
+
+                                        <Label Text="Final" FontSize="20" Margin="0,-0,10,-20"/>
+                                        <DatePicker Format="dd/MM/yyyy" Margin="0,0,0,0"  Date="{Binding FechaFinal}"/>
+                                    </StackLayout>
+
+
+
+                                    <!--primer tigger-->
+                                    <StackLayout Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0,15,0,5" >
+                                        <StackLayout>
+                                            <StackLayout.Triggers>
+                                                <DataTrigger TargetType="StackLayout" Binding="{Binding Estado}" Value="Realizada">
+                                                    <Setter Property="BackgroundColor" Value="Green" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="StackLayout" Binding="{Binding Estado}" Value="Pendiente">
+                                                    <Setter Property="BackgroundColor" Value="RED" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="StackLayout" Binding="{Binding Estado}" Value="En proceso">
+                                                    <Setter Property="BackgroundColor" Value="Orange" />
+                                                </DataTrigger>
+                                            </StackLayout.Triggers>
+
+                                            <!-- Contenido del StackLayout -->
+                                            <Label Text="{Binding Estado}" TextColor="Black" Margin="30,0,0,0"/>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                </Grid>
+
+                            </StackLayout>
+                        </Frame>
+
+
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Path=BindingContext.IraEditarcommand,Source={x:Reference Listado}}" CommandParameter="{Binding .}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                </DataTemplate>
+
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+
+
+        <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Grid.Row="1" BackgroundColor="#000da3" Padding="0,5,0,5">
+            <Button Command="{Binding IrAListadocommand}" ImageSource="https://i.ibb.co/jWSgk2p/portapapeles.png" BackgroundColor="White"  CornerRadius="15" WidthRequest="60" HeightRequest="55" />
+            <Button CommandParameter="Pendiente" Command="{Binding IrAEstadoscommand}" ImageSource="https://i.ibb.co/fk3RJj4/caducado.png" BackgroundColor="Red" CornerRadius="15" WidthRequest="90" HeightRequest="55"/>
+            <Button CommandParameter="En proceso" Command="{Binding IrAEstadoscommand}" ImageSource="https://i.ibb.co/DfNymVw/engranajes.png" BackgroundColor="Yellow" CornerRadius="15" WidthRequest="80" HeightRequest="55"/>
+            <Button CommandParameter="Realizada" Command="{Binding IrAEstadoscommand}" ImageSource="https://i.ibb.co/KjPSQd2/cheque.png" BackgroundColor="Green" CornerRadius="15"  WidthRequest="80" HeightRequest="55"/>
+            <Button Text="+" BackgroundColor="#502bf0"  Command="{Binding IrARegistrocommand}" CornerRadius="15" WidthRequest="80" HeightRequest="55"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gestion_de_tareas.View.Vregistro"            
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Style.Triggers>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="True">
+                        <Setter Property="BackgroundColor" Value="Aqua"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+
+
+            <Grid RowDefinitions="80,*" BackgroundColor="#502bf0" >
+        <StackLayout Orientation="Horizontal" Padding="15" BackgroundColor="#0000a3" >
+
+            <Image Source="https://i.ibb.co/pw5ffsq/flecha-izquierda.png" WidthRequest="40">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Volvercommand}"/>
+                </Image.GestureRecognizers>
+
+            </Image>
+            <Label Text="Registrar" FontSize="40" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+            <Image Source="https://i.ibb.co/1Tc0gvT/lista-de-tareas-1.png"/>
+        </StackLayout>
+
+        <StackLayout Grid.Row="1"  Margin="10,10,0,0" >
+            <!--Descripcion-->
+            <StackLayout Orientation="Vertical">
+                <Label Text="Descripcion: "
+                       TextColor="Black" 
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       FontSize="18"
+                      />
+
+                <Entry 
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       PlaceholderColor="White"
+                       Margin="10,10,0,0"
+                       HorizontalOptions="FillAndExpand"
+                       Text="{Binding Descripcion}"
+                       MaxLength="84"
+                       WidthRequest="380" 
+                       x:Name="entry"
+                       />
+
+            </StackLayout>
+            <!--Estado-->
+            <StackLayout Orientation="Vertical">
+                <Label Text="Estado: "
+                       TextColor="Black"
+                       FontAttributes="Bold"
+                       VerticalOptions="Center"
+                       FontSize="18"/>
+
+                <RadioButton Content="Pendiente" 
+                             TextColor="White"
+                             Margin="10,0,0,0"
+                             Value="Pendiente"
+                             IsChecked="{Binding EPendiente}"
+                             />
+
+                <RadioButton Content="En proceso" 
+                             TextColor="White"
+                             Margin="10,0,0,0"
+                             Value="En proceso"
+                             
+                             IsChecked="{Binding EProceso}"
+                             />
+
+                <RadioButton Content="Realizada" 
+                             TextColor="White"
+                             Margin="10,0,0,0"
+                             Value="Realizada"
+                             IsChecked="{Binding ERealizada}"
+                            
+                             />
+                
+                
+                
+            </StackLayout>
+            <!--FechaInicio-->
+            <StackLayout Orientation="Vertical">
+                <Label Text="Fecha de inicio: " TextColor="Black" 
+                       FontAttributes="Bold" VerticalOptions="Center" 
+                       FontSize="18"
+                       />
+                <DatePicker Format="dd/MM/yy" TextColor="White"
+                            Margin="10,0,0,0"
+                            Date="{Binding FechaInicio}"
+                            IsEnabled="False"/>
+
+            </StackLayout>
+            <!--FechaFinal-->
+            <StackLayout Orientation="Vertical">
+                <Label Text="Fecha de final: " TextColor="Black" 
+                       FontAttributes="Bold" VerticalOptions="Center" 
+                       FontSize="18"/>
+                <DatePicker Format="dd/MM/yy" TextColor="White" 
+                            Margin="10,0,0,0" WidthRequest="150"
+                            Date="{Binding FechaFinal}"
+                            MinimumDate="{Binding FechaInicio}"/>
+            </StackLayout>
+
+
+
+
+
+
+
+            <Frame HorizontalOptions="CenterAndExpand"
+                   Padding="6"
+                   Margin="-10,270,0,0"
+                   CornerRadius="15"
+                   HasShadow="False"
+                   BackgroundColor="#FEC100" 
+                   WidthRequest="500"
+                   HeightRequest="60">
+                <Button
+                    Text="+"
+                    HorizontalOptions="Center"
+                    BackgroundColor="#FEC100"
+                    BorderColor="#FFE488"
+                    BorderWidth="6"
+                    CornerRadius="15"
+                    FontSize="25"
+                    WidthRequest="500"
+                    HeightRequest="60"
+                   IsEnabled="false"
+                    Command="{Binding Insertarcommand}">
+                    
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference entry}, Path=Text.Length}"
+                     Value="0">
+                            <Setter Property="IsEnabled" Value="False" />
+                        </DataTrigger>
+                    </Button.Triggers>
+               
+                </Button>
+
+
+            </Frame>
+
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
